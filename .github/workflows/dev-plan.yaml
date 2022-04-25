@@ -57,8 +57,8 @@ jobs:
       - uses: ricardochaves/python-lint@v1.4.0
         with:
           python-root-list: "python_alelo tests"
-          use-pylint: false
-          use-pycodestyle: false
+          use-pylint: true
+          use-pycodestyle: true
           use-flake8: false
           use-black: false
           use-mypy: false
