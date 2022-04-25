@@ -14,7 +14,7 @@ env:
 
 
 jobs:
-  make_stru:
+  make_stru_test:
     name: running terraform plan
     runs-on: ubuntu-latest
     env:

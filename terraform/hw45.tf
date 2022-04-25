@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "my-sg-hw45" {
-  name        = "my-sg-hw45"
+  ame        = "my-sg-hw45"
   description = "Traffic 80 and 22"
 
   ingress {
