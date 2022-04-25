@@ -15,7 +15,7 @@ env:
 
 jobs:
   make_stru_test:
-    name: running terraform plan
+    name: running terraform plan and python lint
     runs-on: ubuntu-latest
     env:
       WORKING_DIRECTORY: terraform
