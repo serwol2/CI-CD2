@@ -6,6 +6,15 @@ terraform {
     }
   }
 }
+ 
+ terraform {
+  backend "s3" {
+    bucket = "hw45-terraform-states"
+    key    = "hw45-state"
+    region = "us-east-1"
+    
+  }
+ }
 
 provider "aws" {
   region = "us-east-1"
@@ -51,13 +60,13 @@ resource "aws_security_group" "my-sg-hw45" {
   }
 
 }
-
 resource "aws_instance" "for-docker-hw45" {
   ami           = "ami-04505e74c0741db8d"
   instance_type = "t2.micro"
   key_name = "mykeypairsergey"
   security_groups = [aws_security_group.my-sg-hw45.name]
-  # user_data = "${file("inst-nginx.sh")}" 
+  user_data = file("inst_docker.sh") 
+  #user_data_replace_on_change = true
   tags = {
     Name = "For-docker-hw45"
   }
@@ -65,5 +74,17 @@ resource "aws_instance" "for-docker-hw45" {
 }
 
 output "ec2instance" {
-  value = aws_instance.for-docker-hw45.public_ip
-}
+  value = "http://${aws_instance.for-docker-hw45.public_ip}:4000"
+ }
+
+# resource "aws_secretsmanager_secret" "hw45-github-token" {
+#    name = "github_token"
+# }
+
+# variable "GITHUB_TOKEN" {
+#     type        = string
+# }
+# resource "aws_secretsmanager_secret_version" "github_token_ver" {
+#   secret_id     = aws_secretsmanager_secret.hw45-github-token.id
+#   secret_string = var.GITHUB_TOKEN
+# }
