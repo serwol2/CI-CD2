@@ -4,7 +4,7 @@ on:
   #pull_request:
   push:
     branches:
-      - main
+      - feature
     # path:
     #   - terraform/**
 
@@ -66,3 +66,18 @@ jobs:
           python-version: "3.8"
     #   - name: flake8 Lint
     #     uses: py-actions/flake8@v2   
+    
+  build: 
+    runs-on: ubuntu-latest
+    name: Build and push Docker image
+    steps:
+      - name Build docker image
+       uses: docker/build-push-action@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
+        with:
+          context: .
+          push: true
+          #tags: ${{ steps.meta.outputs.tags }}
+          #labels: ${{ steps.meta.outputs.labels }}
+    
+    
+    
