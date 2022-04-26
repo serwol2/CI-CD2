@@ -72,7 +72,7 @@ jobs:
     name: Build and push Docker image
     steps:
       - name Build docker image
-       uses: docker/build-push-action@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
+        uses: docker/build-push-action@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
         with:
           context: .
           push: true
