@@ -2,7 +2,7 @@ name: 'plan DEV'
 
 on:
   #pull_request:
-  push:
+ # push:
     branches:
       - feature
     # path:
@@ -78,6 +78,13 @@ jobs:
           push: true
           #tags: ${{ steps.meta.outputs.tags }}
           #labels: ${{ steps.meta.outputs.labels }}
+          
+          uses: mr-smithers-excellent/docker-build-push@v5
+with:
+  image: image-name
+  registry: ghcr.io
+  githubOrg: override-org # optional
+  username: ${{ secrets.GHCR_USERNAME }}
+  password: ${{ secrets.GHCR_TOKEN }}
     
-    
-    
+uses: mr-smithers-excellent/docker-build-push@v5
