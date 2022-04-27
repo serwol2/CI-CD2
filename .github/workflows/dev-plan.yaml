@@ -97,6 +97,8 @@ jobs:
           push: true
           tags: serwol/dos-07/app:latest
 
+          secrets: GIT_AUTH_TOKEN=${{ secrets.DOCKERHUB_TOKEN }}
+
     #   - name: Login to GitHub Container Registry
     #     uses: docker/login-action@v1
     #     with:
