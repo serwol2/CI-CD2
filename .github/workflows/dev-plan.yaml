@@ -87,7 +87,9 @@ jobs:
         with:
           context: .
           push: true
-          # tags: ${{ steps.meta.outputs.tags }}
+          tags: user/app:latest
+          #${{ steps.meta.outputs.tags }}
+          
           # labels: ${{ steps.meta.outputs.labels }}
           
 #         uses: mr-smithers-excellent/docker-build-push@v5
