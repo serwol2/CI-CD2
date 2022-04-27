@@ -82,12 +82,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
          
-#       - name Build docker image
-#         uses: docker/build-push-action@v2
-#         with:
-#           context: .
-#           push: true
-#           # tags: ${{ steps.meta.outputs.tags }}
+      - name: Build and push docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          # tags: ${{ steps.meta.outputs.tags }}
           # labels: ${{ steps.meta.outputs.labels }}
           
 #         uses: mr-smithers-excellent/docker-build-push@v5
