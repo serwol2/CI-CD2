@@ -89,10 +89,9 @@ jobs:
           context: .
           push: true
           tags: serwol2/app:latest
+          
 #           #${{ steps.meta.outputs.tags }}
-          
 #           # labels: ${{ steps.meta.outputs.labels }}
-          
 #         uses: mr-smithers-excellent/docker-build-push@v5
 # with:
 #   image: image-name 
