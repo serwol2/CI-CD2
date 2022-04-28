@@ -110,7 +110,7 @@ jobs:
          # context: .
 
           push: true
-          tags: serwol2/app:latest
+          tags: serwol2:latest
           
 #           #${{ steps.meta.outputs.tags }}
 #           # labels: ${{ steps.meta.outputs.labels }}
