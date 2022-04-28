@@ -117,7 +117,7 @@ jobs:
         with:
            image: image-name
            registry: ghcr.io
-           dockerfile: Dockerfile
+           dockerfile: .Dockerfile
           #githubOrg: override-org # optional
            username: serwol2
            password: ${{ secrets.GITHUB_TOKEN }}
