@@ -104,16 +104,27 @@ jobs:
           username: serwol2 #${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Build and push docker image
-        uses: docker/build-push-action@v1
-        with:
-         # context: .
+    #   - name: Build and push docker image
+    #     uses: docker/build-push-action@v2
+    #     with:
+    #      # context: .
 
-          push: true
-          tags: serwol2/app:latest
+    #       push: true
+    #       tags: serwol2/app:latest
+
+      - name: Build and push docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+           image: image-name
+           registry: ghcr.io
+          #githubOrg: override-org # optional
+           username: serwol2
+           password: ${{ secrets.GITHUB_TOKEN }}
+
+
+
           
-#           #${{ steps.meta.outputs.tags }}
-#           # labels: ${{ steps.meta.outputs.labels }}
+#         # labels: ${{ steps.meta.outputs.labels }}
 #         uses: mr-smithers-excellent/docker-build-push@v5
 # with:
 #   image: image-name 
