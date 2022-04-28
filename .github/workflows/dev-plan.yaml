@@ -104,13 +104,13 @@ jobs:
           username: serwol2 #${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Build and push docker image
-        uses: docker/build-push-action@v2
-        with:
-         # context: .
+    #   - name: Build and push docker image
+    #     uses: docker/build-push-action@v2
+    #     with:
+    #      # context: .
 
-          push: true
-          tags: serwol2/serwol2:pull
+    #       push: true
+    #       tags: serwol/app:latest
           
 #           #${{ steps.meta.outputs.tags }}
 #           # labels: ${{ steps.meta.outputs.labels }}
