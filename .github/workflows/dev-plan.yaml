@@ -59,10 +59,16 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1 
 
-      - name: 'Terraform apply'
-        id: apply
-        run: terraform apply -auto-approve -input=false
+      # - name: 'Terraform apply'
+      #   id: apply
+      #   run: terraform apply -auto-approve -input=false
+      #   working-directory: ${{ env.WORKING_DIRECTORY }}
+
+      - name: 'Terraform destroy'
+        id: destroy
+        run: terraform destroy -auto-approve -input=false
         working-directory: ${{ env.WORKING_DIRECTORY }}
+
 
 
 
