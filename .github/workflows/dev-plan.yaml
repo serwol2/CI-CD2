@@ -55,6 +55,18 @@ jobs:
         run: terraform plan -no-color
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1 
+
+
+      - name: 'Terraform apply'
+        id: apply
+        run: terraform apply -auto-approve -input=false
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+
+
 # python lint
 
 #   flake8-lint:
