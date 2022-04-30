@@ -6,6 +6,18 @@ terraform {
     }
   }
 }
+  backend "s3" {
+    bucket = "hw45-terraform-states"
+    key    = "hw45-state"
+    region = "us-east-1"
+    #shared_credentials_file = "~/.aws/credentials"
+  }
+}
+
+
+
+
+
 
 provider "aws" {
   region = "us-east-1"
