@@ -49,15 +49,15 @@ jobs:
         id: init
         run: terraform init 
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        # env:
-        #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        env:
+          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
       - name: 'Terraform plan'
         id: plan
         run: terraform plan -no-color
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        # env:
-        #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        env:
+          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
@@ -67,14 +67,14 @@ jobs:
         id: apply
         run: terraform apply -auto-approve -input=false
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        # env:
-        #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        env:
+          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
 
-      - name: 'Terraform destroy'
-        id: destroy
-        run: terraform destroy -auto-approve -input=false
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+      # - name: 'Terraform destroy'
+      #   id: destroy
+      #   run: terraform destroy -auto-approve -input=false
+      #   working-directory: ${{ env.WORKING_DIRECTORY }}
 
 
 
