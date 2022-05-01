@@ -86,6 +86,9 @@ resource "aws_secretsmanager_secret" "hw45-github-token" {
    name = "github_token"
 }
 
+variable "GITHUB_TOKEN" {
+    type        = string
+
 resource "aws_secretsmanager_secret_version" "github_token_ver" {
   secret_id     = aws_secretsmanager_secret.hw45-github-token.id
   secret_string = "${GITHUB_TOKEN}"
