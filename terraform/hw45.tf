@@ -66,7 +66,7 @@ resource "aws_instance" "for-docker-hw45" {
   instance_type = "t2.micro"
   key_name = "mykeypairsergey"
   security_groups = [aws_security_group.my-sg-hw45.name]
-  user_data = "${file("inst-nginx.sh")}" 
+  user_data = "${file("inst-docker.sh")}" 
   tags = {
     Name = "For-docker-hw45"
   }
