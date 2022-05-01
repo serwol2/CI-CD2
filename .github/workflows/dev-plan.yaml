@@ -53,7 +53,7 @@ jobs:
           github_token: ${{ secrets.GITH_TOKEN }}
           working_directory: terraform # Change working directory
           level: info # Get more output from reviewdog
-          #reporter: github-pr-review # Change reviewdog reporter
+          reporter: github-pr-review # Change reviewdog reporter
           #filter_mode: nofilter # Check all files, not just the diff
           fail_on_error: true # Fail action if errors are found
           flags: -tee # Add debug flag to reviewdog
@@ -127,6 +127,7 @@ jobs:
   docker-build-and-push:
     runs-on: ubuntu-latest
     name: docker build and push
+    needs: make_stru_test
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
