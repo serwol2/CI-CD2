@@ -66,7 +66,7 @@ resource "aws_instance" "for-docker-hw45" {
   key_name = "mykeypairsergey"
   security_groups = [aws_security_group.my-sg-hw45.name]
   user_data = file("inst_docker.sh") 
-  user_data_replace_on_change = true
+  #user_data_replace_on_change = true
   tags = {
     Name = "For-docker-hw45"
   }
