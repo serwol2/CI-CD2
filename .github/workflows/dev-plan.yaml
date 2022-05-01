@@ -63,12 +63,12 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1 
 
-      - name: 'Terraform apply'
-        id: apply
-        run: terraform apply -auto-approve -input=false
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        env:
-          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+      # - name: 'Terraform apply'
+      #   id: apply
+      #   run: terraform apply -auto-approve -input=false
+      #   working-directory: ${{ env.WORKING_DIRECTORY }}
+      #   env:
+      #     TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
 
       # - name: 'Terraform destroy'
