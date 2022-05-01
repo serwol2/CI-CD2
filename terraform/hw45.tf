@@ -60,13 +60,13 @@ resource "aws_security_group" "my-sg-hw45" {
   }
 
 }
-
 resource "aws_instance" "for-docker-hw45" {
   ami           = "ami-04505e74c0741db8d"
   instance_type = "t2.micro"
   key_name = "mykeypairsergey"
   security_groups = [aws_security_group.my-sg-hw45.name]
   user_data = file("inst_docker.sh") 
+  user_data_replace_on_change = true
   tags = {
     Name = "For-docker-hw45"
   }
@@ -74,7 +74,8 @@ resource "aws_instance" "for-docker-hw45" {
 }
 
 output "ec2instance" {
-  value = aws_instance.for-docker-hw45.public_ip
+  description = "Type in your browser:"
+  value = "http://"+aws_instance.for-docker-hw45.public_ip+":4000"
  }
 
 resource "aws_secretsmanager_secret" "hw45-github-token" {
