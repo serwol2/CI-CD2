@@ -86,18 +86,23 @@ jobs:
 
 # python lint
 
-  flake8-lint:
+  python-lint:
     runs-on: ubuntu-latest
     name: Lint
     steps:
-      - name: Check out source repository
-        uses: actions/checkout@v2
-      - name: Set up Python environment
-        uses: actions/setup-python@v2
-        with:
-          python-version: "2.7"
-      - name: flake8 Lint
-        uses: py-actions/flake8@v2   
+    - name: Lint with pylint
+      run: |
+        pip install pylint
+        pylint .
+
+    #   - name: Check out source repository
+    #     uses: actions/checkout@v2
+    #   - name: Set up Python environment
+    #     uses: actions/setup-python@v2
+    #     with:
+    #       python-version: "2.7"
+    #   - name: flake8 Lint
+    #     uses: py-actions/flake8@v2   
     
 #   build: 
 #     runs-on: ubuntu-latest
