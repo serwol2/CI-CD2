@@ -59,7 +59,7 @@ jobs:
           #tfsec_flags: "" # Optional
 
 
-      - namebb: 'Terraform init'
+      - name: 'Terraform init'
         id: init
         run: terraform init 
         working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -77,10 +77,10 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1 
 
-      - name: 'Terraform apply'
-        id: apply
-        run: terraform apply -auto-approve -input=false
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+      # - name: 'Terraform apply'
+      #   id: apply
+      #   run: terraform apply -auto-approve -input=false
+      #   working-directory: ${{ env.WORKING_DIRECTORY }}
      
      
         # env:
