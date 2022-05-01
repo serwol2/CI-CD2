@@ -12,7 +12,7 @@ on:
 env:
   AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY_ID}}
   AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY_ID}}
-  GITHUB_TOKEN: ${{secrets.GITH_TOKEN}}
+  #GITHUB_TOKEN: ${{secrets.GITH_TOKEN}}
   #REGISTRY: ghcr.io
 
 
@@ -49,15 +49,15 @@ jobs:
         id: init
         run: terraform init 
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        env:
-          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        # env:
+        #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
       - name: 'Terraform plan'
         id: plan
         run: terraform plan -no-color
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        env:
-          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        # env:
+        #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
@@ -71,12 +71,12 @@ jobs:
       #     TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
 
-      - name: 'Terraform destroy'
-        id: destroy
-        run: terraform destroy -auto-approve -input=false
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        env:
-          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+      # - name: 'Terraform destroy'
+      #   id: destroy
+      #   run: terraform destroy -auto-approve -input=false
+      #   working-directory: ${{ env.WORKING_DIRECTORY }}
+      #   env:
+      #     TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
 
 
@@ -86,18 +86,18 @@ jobs:
 
 # python lint
 
-#   flake8-lint:
-#     runs-on: ubuntu-latest
-#     name: Lint
-#     steps:
-#       - name: Check out source repository
-#         uses: actions/checkout@v2
-#       - name: Set up Python environment
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: "3.8"
-    #   - name: flake8 Lint
-    #     uses: py-actions/flake8@v2   
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v2
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2   
     
 #   build: 
 #     runs-on: ubuntu-latest
