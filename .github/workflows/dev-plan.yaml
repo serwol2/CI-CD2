@@ -104,9 +104,9 @@ jobs:
     #   - name: flake8 Lint
     #     uses: py-actions/flake8@v2   
     
-  build: 
-    runs-on: ubuntu-latest
-    name: Build and push Docker image to GitHub Packages
+  # build: 
+  #   runs-on: ubuntu-latest
+  #   name: Build and push Docker image to GitHub Packages
 
 
   docker-build-and-push:
