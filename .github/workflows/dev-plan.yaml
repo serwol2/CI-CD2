@@ -56,6 +56,8 @@ jobs:
         id: plan
         run: terraform plan -no-color
         working-directory: ${{ env.WORKING_DIRECTORY }}
+        env:
+          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
