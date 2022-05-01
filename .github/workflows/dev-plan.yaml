@@ -45,7 +45,11 @@ jobs:
         continue-on-error: true
         working-directory: ${{ env.WORKING_DIRECTORY }}    
 
+<<<<<<< HEAD
 #### tfsec #####################
+=======
+###############################
+>>>>>>> 753ca8cf8d6cf16c1b7e67900de92132438b0049
 
       - name: Run tfsec with reviewdog output on the PR
         uses: reviewdog/action-tfsec@master
@@ -59,6 +63,15 @@ jobs:
           flags: -tee # Add debug flag to reviewdog
           #tfsec_flags: "" # Optional
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+>>>>>>> 753ca8cf8d6cf16c1b7e67900de92132438b0049
 ################################
 
       - name: 'Terraform init'
