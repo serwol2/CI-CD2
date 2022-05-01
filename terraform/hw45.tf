@@ -91,5 +91,5 @@ variable "GITHUB_TOKEN" {
 }
 resource "aws_secretsmanager_secret_version" "github_token_ver" {
   secret_id     = aws_secretsmanager_secret.hw45-github-token.id
-  secret_string = "${GITHUB_TOKEN}"
+  secret_string = var.GITHUB_TOKEN
 }

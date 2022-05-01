@@ -50,7 +50,7 @@ jobs:
         run: terraform init 
         working-directory: ${{ env.WORKING_DIRECTORY }}
         env:
-          TF_VAR_GITHUB_TOKEN: ${{ secrets.GITH_TOKEN }}
+          TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
       - name: 'Terraform plan'
         id: plan
