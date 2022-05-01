@@ -63,12 +63,14 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1 
 
-      # - name: 'Terraform apply'
-      #   id: apply
-      #   run: terraform apply -auto-approve -input=false
-      #   working-directory: ${{ env.WORKING_DIRECTORY }}
-      #   env:
-      #     TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+      - name: 'Terraform apply'
+        id: apply
+        run: terraform apply -auto-approve -input=false
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+     
+     
+        # env:
+        #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
 
       # - name: 'Terraform destroy'
@@ -77,11 +79,6 @@ jobs:
       #   working-directory: ${{ env.WORKING_DIRECTORY }}
       #   env:
       #     TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-
-
-
-
-
 
 
 # python lint
@@ -104,11 +101,7 @@ jobs:
     #   - name: flake8 Lint
     #     uses: py-actions/flake8@v2   
     
-  # build: 
-  #   runs-on: ubuntu-latest
-  #   name: Build and push Docker image to GitHub Packages
-
-
+ 
   docker-build-and-push:
     runs-on: ubuntu-latest
     name: docker build and push
@@ -144,20 +137,3 @@ jobs:
          # context: .
           push: true
           tags: ghcr.io/serwol2/app:latest
-
-
-
-      
-
-
-          
-#         # labels: ${{ steps.meta.outputs.labels }}
-#         uses: mr-smithers-excellent/docker-build-push@v5
-# with:
-#   image: image-name 
-#   registry: ghcr.io
-#   githubOrg: override-org # optional
-#   username: ${{ secrets.GHCR_USERNAME }}
-#   password: ${{ secrets.GHCR_TOKEN }}
-    
-# uses: mr-smithers-excellent/docker-build-push@v5
