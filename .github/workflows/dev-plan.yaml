@@ -71,10 +71,10 @@ jobs:
           TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
 
-      # - name: 'Terraform destroy'
-      #   id: destroy
-      #   run: terraform destroy -auto-approve -input=false
-      #   working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: 'Terraform destroy'
+        id: destroy
+        run: terraform destroy -auto-approve -input=false
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
 
 

@@ -74,7 +74,6 @@ resource "aws_instance" "for-docker-hw45" {
 }
 
 output "ec2instance" {
-  description = "Type in your browser:"
   value = "http://${aws_instance.for-docker-hw45.public_ip}:4000"
  }
 
