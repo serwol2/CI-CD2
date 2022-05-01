@@ -45,7 +45,7 @@ jobs:
         continue-on-error: true
         working-directory: ${{ env.WORKING_DIRECTORY }}    
 
-###############################
+#### tfsec #####################
 
       - name: Run tfsec with reviewdog output on the PR
         uses: reviewdog/action-tfsec@master
@@ -58,12 +58,6 @@ jobs:
           fail_on_error: true # Fail action if errors are found
           flags: -tee # Add debug flag to reviewdog
           #tfsec_flags: "" # Optional
-
-
-
-
-
-
 
 ################################
 
