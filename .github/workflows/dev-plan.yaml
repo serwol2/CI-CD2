@@ -181,16 +181,21 @@ jobs:
         #   fetch-depth: 0
         #   ref: feature
 
-      - name: install github cli
-        run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-          sudo apt-add-repository https://cli.github.com/packages
-          sudo apt update
-          sudo apt install gh
-          gh auth login --with-token ${{ secrets.GITH_TOKEN  }}
+      # - name: install github cli
+      #   run: |
+      #     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+      #     sudo apt-add-repository https://cli.github.com/packages
+      #     sudo apt update
+      #     sudo apt install gh
+
+      # - name: auth to github
+      #   run: 
+      #     gh auth login --with-token ${{ secrets.GITH_TOKEN  }}
     
       - name: Create Pull Request CLI
         run: gh pr create --title "The bug is fixed" --body "Everything works again"
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITH_TOKEN  }}
 
 
       # - name: Create Pull Request
