@@ -189,6 +189,8 @@ jobs:
           branch: main
           body: testt
           draft: true
+          title: testtest
+          reviewers: serwol
           
 
         # uses: devops-infra/action-pull-request@v0.4.2
