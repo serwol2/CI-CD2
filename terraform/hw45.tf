@@ -6,15 +6,15 @@ terraform {
     }
   }
 }
- 
- terraform {
+
+terraform {
   backend "s3" {
     bucket = "hw45-terraform-states"
     key    = "hw45-state"
     region = "us-east-1"
-    
+
   }
- }
+}
 
 provider "aws" {
   region = "us-east-1"
@@ -28,27 +28,27 @@ resource "aws_security_group" "my-sg-hw45" {
   description = "Traffic 80 and 22"
 
   ingress {
-    description      = "22"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "22"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    description      = "80"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "80"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
- 
+
   ingress {
-    description      = "4000"
-    from_port        = 4000
-    to_port          = 4000
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "4000"
+    from_port   = 4000
+    to_port     = 4000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -61,11 +61,11 @@ resource "aws_security_group" "my-sg-hw45" {
 
 }
 resource "aws_instance" "for-docker-hw45" {
-  ami           = "ami-04505e74c0741db8d"
-  instance_type = "t2.micro"
-  key_name = "mykeypairsergey"
+  ami             = "ami-04505e74c0741db8d"
+  instance_type   = "t2.micro"
+  key_name        = "mykeypairsergey"
   security_groups = [aws_security_group.my-sg-hw45.name]
-  user_data = file("inst_docker.sh") 
+  user_data       = file("inst_docker.sh")
   #user_data_replace_on_change = true
   tags = {
     Name = "For-docker-hw45"
@@ -75,7 +75,7 @@ resource "aws_instance" "for-docker-hw45" {
 
 output "ec2instance" {
   value = "http://${aws_instance.for-docker-hw45.public_ip}:4000"
- }
+}
 
 # resource "aws_secretsmanager_secret" "hw45-github-token" {
 #    name = "github_token"

@@ -182,11 +182,17 @@ jobs:
         #   ref: feature
 
       - name: Create Pull Request
-        uses: devops-infra/action-pull-request@v0.4.2
+        uses: peter-evans/create-pull-request@v4
         with:
-          github_token: ${{ secrets.GITH_TOKEN }}
-          title: 'Testt'
-          reviewer: serwol
-          source_branch: feature 
-          target_branch: main
-          draft: true
+          token: ${{ secrets.PAT }}
+          
+
+        # uses: devops-infra/action-pull-request@v0.4.2
+        # with:
+        #   github_token: ${{ secrets.GITH_TOKEN }}
+        #   title: 'Testt'
+        #   reviewer: serwol
+        #   source_branch: feature 
+        #   target_branch: main
+        #   draft: true
+        #   get_diff: true
