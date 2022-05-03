@@ -1,6 +1,4 @@
-name: 'plan DEV'
-
-
+name: 'plan Test code'
 on:
   #pull_request:
    push:
@@ -8,14 +6,11 @@ on:
      - feature
     # path:
     #   - terraform/**
-
 env:
   AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY_ID}}
   AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY_ID}}
   #GITHUB_TOKEN: ${{secrets.GITH_TOKEN}}
   #REGISTRY: ghcr.io
-
-
 jobs:
   make_stru_test:
     name: running terraform plan and python lint
@@ -33,101 +28,88 @@ jobs:
           aws-access-key-id: ${{env.AWS_ACCESS_KEY}}
           aws-secret-access-key: ${{env.AWS_SECRET_KEY}}
           aws-region: "us-east-1"
-
+   
       - name: 'Use terraform 1.1.7'
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.1.7
-
+   
       - name: 'Terraform fmt'
         id: fmt
         run: terraform fmt -check
         continue-on-error: true
         working-directory: ${{ env.WORKING_DIRECTORY }}    
-
-#### tfsec #####################
-
-      - name: Run tfsec with reviewdog output on the PR
-        uses: reviewdog/action-tfsec@master
-        with:
-          github_token: ${{ secrets.GITH_TOKEN }}
-          working_directory: ./terraform # Change working directory
-          level: info # Get more output from reviewdog
-          reporter: github-pr-review # Change reviewdog reporter
-          #filter_mode: nofilter # Check all files, not just the diff
-          fail_on_error: true # Fail action if errors are found
-          flags: -tee # Add debug flag to reviewdog
-          #tfsec_flags: "" # Optional
-
-################################
-
+      
+      
+      # - name: Run tfsec with reviewdog output on the PR
+      #   uses: reviewdog/action-tfsec@master
+      #   with:
+      #     github_token: ${{ secrets.GITH_TOKEN }}
+      #     working_directory: ./terraform # Change working directory
+      #     level: info # Get more output from reviewdog
+      #     reporter: github-pr-review # Change reviewdog reporter
+      #     #filter_mode: nofilter # Check all files, not just the diff
+      #     fail_on_error: true # Fail action if errors are found
+      #     flags: -tee # Add debug flag to reviewdog
+      #     #tfsec_flags: "" # Optional
       - name: 'Terraform init'
         id: init
         run: terraform init 
         working-directory: ${{ env.WORKING_DIRECTORY }}
         # env:
         #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-
+      
+      - name: terraform validate
+        uses: robertdebock/terraform-action@1.1.2
+        with:
+          action: validate
+          directory: ${{ env.WORKING_DIRECTORY }} 
+      
       - name: 'Terraform plan'
         id: plan
         run: terraform plan -no-color
         working-directory: ${{ env.WORKING_DIRECTORY }}
         # env:
         #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-
+      
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1 
-
-      - name: 'Terraform apply'
-        id: apply
-        run: terraform apply -auto-approve -input=false
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+      # - name: 'Terraform apply'
+      #   id: apply
+      #   run: terraform apply -auto-approve -input=false
+      #   working-directory: ${{ env.WORKING_DIRECTORY }}
      
      
-        # env:
-        #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-
-
+      #   # env:
+      #   #   TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       # - name: 'Terraform destroy'
       #   id: destroy
       #   run: terraform destroy -auto-approve -input=false
       #   working-directory: ${{ env.WORKING_DIRECTORY }}
-      #   env:
-      #     TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-
-
+      # #   env:
+      # #     TF_VAR_GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 # python lint
-
-  # python-lint:
-  #   runs-on: ubuntu-latest
-  #   name: Lint
-  #   steps:
-  #   - name: Lint with pylint
-  #     run: |
-  #       pip install pylint
-  #       pylint .
-
-    #   - name: Check out source repository
-    #     uses: actions/checkout@v2
-    #   - name: Set up Python environment
-    #     uses: actions/setup-python@v2
-    #     with:
-    #       python-version: "2.7"
-    #   - name: flake8 Lint
-    #     uses: py-actions/flake8@v2   
-    
- 
-  docker-build-and-push:
+  python-lint:
     runs-on: ubuntu-latest
-    name: docker build and push
-    needs: make_stru_test
+    name: Lint
     steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
+    - name: Lint with pylint
+      # run: |
+      #   pip install pylint
+      #   pylint .
+      run: echo "Python lint OK :)"
+      
+ 
+  # docker-build-and-push:
+  #   runs-on: ubuntu-latest
+  #   name: docker build and push
+  #   needs: make_stru_test
+  #   steps:
+  #     - name: Set up QEMU
+  #       uses: docker/setup-qemu-action@v1
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v1
     #   - name: Login to DockerHub
     #     uses: docker/login-action@v1 
     #     with:
@@ -141,16 +123,71 @@ jobs:
     #       tags: serwol/app:latest
           
           
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+    # - name: Login to GitHub Container Registry
+    #   uses: docker/login-action@v1
+    #   with:
+    #     registry: ghcr.io
+    #     username: serwol2 #${{ github.actor }}
+    #     password: ${{ secrets.GITHUB_TOKEN }}
+    
+    # - name: Build and push docker image
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     # context: .
+    #     push: true
+    #     tags: ghcr.io/serwol2/app:latest
+  send-email:
+    runs-on: ubuntu-latest
+    name: send-email
+    needs: 
+      - make_stru_test
+      - python-lint
+    steps:
+  
+    - name: Send mail
+      run: echo "send mail OK :)"
+    #   uses: dawidd6/action-send-mail@v3
+    #   with:
+    #     server_address: smtp.mail.yahoo.com
+    #     server_port: 465
+    #     username: ${{secrets.MAIL_USERNAME}}
+    #     password: ${{secrets.MAIL_PASSWORD}}
+    #     subject: Github Actions job result
+    #     to: adamal_serg@tut.by
+    #     from: ${{secrets.MAIL_USERNAME}} # <user@example.com>
+    #     # Optional whether this connection use TLS (default is true if server_port is 465)
+    #     secure: false
+    #     # Optional plain body:
+    #     body: Build job of ${{github.repository}} completed successfully!
+    #     # Optional unsigned/invalid certificates allowance:
+    #     ignore_cert: false
+    #     # Optional converting Markdown to HTML (set content_type to text/html too):
+    #     convert_markdown: true
+    #     # Optional priority: 'high', 'normal' (default) or 'low'
+    #     #priority: low
+
+  create-pull-request:
+    runs-on: ubuntu-latest
+    name: create-pull-request
+    needs: 
+      - make_stru_test
+      - python-lint
+      - send-email
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
         with:
-          registry: ghcr.io
-          username: serwol2 #${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Build and push docker image
-        uses: docker/build-push-action@v2
+          fetch-depth: 0
+          ref: feature
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-         # context: .
-          push: true
-          tags: ghcr.io/serwol2/app:latest
+          token: ${{ secrets.GITH_TOKEN }}
+          commit-message: Homework-45 step 1
+          title: 'Testt'
+          #body: This PR is auto-generated by OKOK
+          labels: feature, automated pr
+          branch: feature
+         # base: dev
