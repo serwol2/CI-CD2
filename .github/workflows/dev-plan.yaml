@@ -185,9 +185,10 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITH_TOKEN }}
-          base: main
-          branch: feature
+          base: feature
+          branch: main
           body: testt
+          draft: true
           
 
         # uses: devops-infra/action-pull-request@v0.4.2
