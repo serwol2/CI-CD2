@@ -193,7 +193,7 @@ jobs:
       #     gh auth login --with-token ${{ secrets.GITH_TOKEN  }}
     
       - name: Create Pull Request CLI
-        run: gh pr create --title "The bug is fixed" --body "Everything works again"
+        run: gh pr create --title "The new feature" --body "test and merge to feature pls" --base feature --head dev
         env: 
           GITHUB_TOKEN: ${{ secrets.GITH_TOKEN  }}
 
