@@ -186,4 +186,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITH_TOKEN }}
           title: 'Testt'
+          source_branch: feature 
           target_branch: main
